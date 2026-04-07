@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- SEO + WhatsApp Preview -->
+<meta name="title" content="Saini Cloths VK">
+<meta name="description" content="Best Online Fashion Store - Men, Women & Kids Wear">
+
+<!-- Open Graph (WhatsApp / Facebook preview) -->
+<meta property="og:title" content="Saini Cloths VK">
+<meta property="og:description" content="Shop Now - Best Clothes at Best Price">
+<meta property="og:image" content="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400">
+<meta property="og:type" content="website">
+
+<title>Saini Cloths VK - Live Store</title>
+
+<style>
+body{margin:0;font-family:Arial;background:#f5f5f5}
+header{background:#138f62;color:white;padding:15px;text-align:center}
+.container{padding:20px}
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+.card{background:white;padding:15px;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.1);text-align:center}
+.card img{width:100%;height:180px;object-fit:cover;border-radius:10px}
+button{padding:8px 15px;margin:5px;border:none;border-radius:5px;cursor:pointer}
+.add{background:#28a745;color:white}
+.order{background:#007bff;color:white}
+.pay{background:#ff9800;color:white}
+footer{background:#111;color:white;text-align:center;padding:10px;margin-top:20px}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>SAINI CLOTHS VK</h1>
+<p>Online Fashion Store</p>
+</header>
+
+<div class="container">
+<h2>Products</h2>
+<div class="products" id="products"></div>
+
+<h2>Cart</h2>
+<ul id="cart"></ul>
+<h3>Total ₹<span id="total">0</span></h3>
+
+<button class="order" onclick="orderWhatsApp()">Order on WhatsApp</button>
+<button class="pay" onclick="payNow()">Pay via UPI</button>
+
+</div>
+
+<footer>
+<p>© 2026 Saini Cloths VK</p>
+<p>Made by Vikki Saini</p>
+</footer>
+
+<script>
+let products=[
+{name:"Shirt",price:500,img:"https://images.unsplash.com/photo-1520975922284-9d3f8b3a3a4a?w=400"},
+{name:"Jeans",price:900,img:"https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=400"},
+{name:"Kids Dress",price:400,img:"https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=400"}
+];
+
+let cart=[];
+
+function load(){
+let p=document.getElementById("products");
+p.innerHTML="";
+products.forEach((item,i)=>{
+p.innerHTML+=`<div class='card'>
+<img src='${item.img}'>
+<h3>${item.name}</h3>
+<p>₹${item.price}</p>
+<button class='add' onclick='add(${i})'>Add</button>
+</div>`;
+});
+}
+
+function add(i){cart.push(products[i]);update();}
+
+function update(){
+let list=document.getElementById("cart");
+let total=0;list.innerHTML="";
+cart.forEach(c=>{total+=c.price;list.innerHTML+=`<li>${c.name} ₹${c.price}</li>`});
+document.getElementById("total").innerText=total;
+}
+
+function orderWhatsApp(){
+let msg="Order:%0A";
+cart.forEach(c=>msg+=c.name+" ₹"+c.price+"%0A");
+msg+="Total ₹"+document.getElementById("total").innerText;
+window.open("https://wa.me/919759698944?text="+msg);
+}
+
+// ✅ Direct UPI Payment
+function payNow(){
+let total=document.getElementById("total").innerText;
+let upi=`upi://pay?pa=9759698944@upi&pn=SainiClothsVK&am=${total}&cu=INR`;
+window.location.href=upi;
+}
+
+load();
+</script>
+
+</body>
+</html>
